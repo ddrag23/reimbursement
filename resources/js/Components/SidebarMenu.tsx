@@ -1,4 +1,4 @@
-import { FaGaugeHigh, FaUser, } from "react-icons/fa6";
+import { FaGaugeHigh, FaUser, FaUsers } from "react-icons/fa6";
 import type { ReactElement } from 'react'
 export type SidebarMenu = {
     title: string;
@@ -15,6 +15,11 @@ const menus: SidebarMenu[] = [
         title: "Profile",
         icon: <FaUser />,
         link: "profile.edit",
+    },
+    {
+        title: "User Management",
+        icon: <FaUsers />,
+        link: "user.index",
     },
 ];
 export default menus;
