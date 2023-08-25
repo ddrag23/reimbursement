@@ -15,7 +15,7 @@ export default function Authenticated({
         <>
             <div className="flex flex-col min-h-screen w-full">
                 <Navbar />
-                <main>{children}</main>
+                <main className="py-12">{children}</main>
             </div>
         </>
     );
