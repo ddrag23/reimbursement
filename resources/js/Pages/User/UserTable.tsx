@@ -18,18 +18,24 @@ export default function UserTable({ tableUrl }: UserTableProps) {
         setCurrentPage(newPage);
     };
     useEffect(() => {
-
-        axios.get(`${tableUrl}?limit=10&page=${currentPage}`).then(({ data }) => {
+        const source = axios.CancelToken.source()
+        axios.get(`${tableUrl}?limit=10&page=${currentPage}`, { cancelToken: source.token }).then(({ data }) => {
             setData(data.data)
             setTotalPages(data.totalCount)
         })
+        return () => {
+            source.cancel("Ruquest Canceled")
+        }
     }, [currentPage])
-    return <DataTable tbHeader={columns} pagination={<Pagination totalData={100} currentPage={currentPage} handlePageChange={handlePageChange} />}>
-        {data.length > 0 ? data.map((item, key) => <tr key={key}>
+    const TableBody: React.FC = () => {
+        return data.length > 0 ? data.map((item, key) => <tr key={key}>
             <td>{item.name}</td>
             <td>{item.email}</td>
         </tr>) : <tr>
             <td colSpan={columns.length} className="text-center">Tidak ada data</td>
-        </tr>}
+        </tr>
+    }
+    return <DataTable tbHeader={columns} pagination={<Pagination totalData={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}>
+        <TableBody />
     </DataTable>
 }
