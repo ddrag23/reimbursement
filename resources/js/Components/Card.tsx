@@ -18,10 +18,7 @@ export default function Card({ title, children, isFooter, childrenFooter, classN
                 {children}
             </div>
             {isFooter && <>
-                <div className="divider"></div>
-                <div className="px-5 pb-5">
-                    <button className="btn btn-primary">oke</button>
-                </div>
+                {childrenFooter}
             </>}
 
         </div>
