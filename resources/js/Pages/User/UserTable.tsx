@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "@/Components/Pagination";
 import DataTable, { ColumnHeader } from "@/Components/DataTable";
 import { FaPlus, FaXmark, FaArrowsRotate } from "react-icons/fa6";
 import UserTableBody from "./Partials/UserTableBody";
 import Loading from "@/Components/Loading";
+import can from "@/utils/can";
+import AuthContext from "@/Context/AuthContext";
 type UserTableProps = {
     tableUrl: string
 }
@@ -16,6 +18,7 @@ export default function UserTable({ tableUrl }: UserTableProps) {
         { id: 'roles', title: "Roles" },
         { id: 'action', title: "Aksi" },
     ];
+    const user = useContext(AuthContext)
     const [data, setData] = useState<any[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -44,7 +47,9 @@ export default function UserTable({ tableUrl }: UserTableProps) {
 
     return <>
         <div className="flex justify-between mb-5">
-            <button className="btn btn-primary"><FaPlus />Tambah</button>
+            {can(user, 'create-user') &&
+                <button className="btn btn-primary"><FaPlus />Tambah</button>
+            }
             <div className="flex w-1/4 gap-3">
                 <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={(e) => setSearch(e.target.value)} value={search} />
                 {search.length > 0 &&
