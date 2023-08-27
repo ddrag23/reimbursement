@@ -18,7 +18,10 @@ class UserController extends Controller
 
     public function queryTable(Request $request)
     {
-        $query = User::paginate($request->take);
-        return new QueryAdapterCollection($query);
+        $query = User::with('roles');
+        if ($request->has('search')) {
+            $query->where('email', 'like', "%{$request->search}%")->orWhere('name', 'like', "%{$request->search}%");
+        }
+        return new QueryAdapterCollection($query->paginate($request->take));
     }
 }
