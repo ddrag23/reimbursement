@@ -1,14 +1,15 @@
 import { Link } from '@inertiajs/react'
 import menus from '@/Components/SidebarMenu'
+import { useContext } from 'react'
+import AuthContext from '@/Context/AuthContext'
+import SidebarItem from './SidebarItem'
 export default function Sidebar() {
-    const activeClass = 'bg-blue-700 rounded-md'
+    const user = useContext(AuthContext)
+    const roles = user?.roles.map(item => item.permissions)
+    const permissions = roles?.map(item => item.map(p => p.name))[0]
+
     return <ul className="menu h-full bg-base-200 w-56">
-        {menus.map((item, key) => <li className="" key={key}>
-            <Link href={route(item.link)} className={route().current() == item.link ? activeClass : ''}>
-                {item.icon}
-                {item.title}
-            </Link>
-        </li>)}
+        {menus.map((item, key) => item.permission == '' ? <SidebarItem key={key} link={item.link} title={item.title} icon={item.icon} /> : permissions?.includes(item.permission) && <SidebarItem key={key} link={item.link} title={item.title} icon={item.icon} />)}
 
     </ul>
 
