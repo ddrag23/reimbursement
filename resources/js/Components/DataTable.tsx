@@ -1,4 +1,5 @@
 import { PropsWithChildren, ReactNode, CSSProperties } from "react"
+import { inherits } from "util"
 
 export type ColumnHeader = {
     id: string
@@ -19,7 +20,7 @@ export default function DataTable({ tbHeader, children, pagination }: PropsWithC
         </tr>
     }
     return <div className="overflow-x-auto">
-        <table className="table table-pin-row block">
+        <table className="table table-pin-row z-0" style={{ position: "inherit" }}>
             {/* head */}
             <thead className="">
                 <ColumnHeader />
