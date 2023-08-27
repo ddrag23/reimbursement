@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "@/Components/Pagination";
 import DataTable, { ColumnHeader } from "@/Components/DataTable";
-import { FaPencil, FaTrash, FaPlus, FaXmark, FaArrowsRotate } from "react-icons/fa6";
+import { FaPlus, FaXmark, FaArrowsRotate } from "react-icons/fa6";
+import UserTableBody from "./Partials/UserTableBody";
+import Loading from "@/Components/Loading";
 type UserTableProps = {
     tableUrl: string
 }
@@ -11,6 +13,7 @@ export default function UserTable({ tableUrl }: UserTableProps) {
     const columns: ColumnHeader[] = [
         { id: 'name', title: "Nama" },
         { id: 'email', title: "Email" },
+        { id: 'roles', title: "Roles" },
         { id: 'action', title: "Aksi" },
     ];
     const [data, setData] = useState<any[]>([]);
@@ -38,23 +41,7 @@ export default function UserTable({ tableUrl }: UserTableProps) {
             source.cancel("Ruquest Canceled")
         }
     }, [currentPage, search, refresh])
-    const TableBody: React.FC = () => {
-        return data.length > 0 ? data.map((item, key) => <tr key={key}>
-            <td>{item.name}</td>
-            <td>{item.email}</td>
-            <td>
-                <button className="btn btn-sm btn-primary mr-2" onClick={() => (window as any).my_modal_1.showModal()}><FaPencil /></button>
-                <button className="btn btn-sm btn-error"><FaTrash /></button>
-            </td>
-        </tr>) : <tr>
-            <td colSpan={columns.length} className="text-center">Tidak ada data</td>
-        </tr>
-    }
-    const Loading: React.FC = () => {
-        return <div className="flex justify-center">
-            <span className="loading loading-infinity loading-lg"></span>
-        </div>
-    }
+
     return <>
         <div className="flex justify-between mb-5">
             <button className="btn btn-primary"><FaPlus />Tambah</button>
@@ -69,7 +56,7 @@ export default function UserTable({ tableUrl }: UserTableProps) {
         </div>
         {loading ? <Loading /> :
             <DataTable tbHeader={columns} pagination={<Pagination totalData={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}>
-                <TableBody />
+                <UserTableBody columns={columns} data={data} />
             </DataTable>
         }
         <dialog id="my_modal_1" className="modal">
