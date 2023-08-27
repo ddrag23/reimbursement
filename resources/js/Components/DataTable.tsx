@@ -19,9 +19,9 @@ export default function DataTable({ tbHeader, children, pagination }: PropsWithC
         </tr>
     }
     return <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table table-pin-row block">
             {/* head */}
-            <thead>
+            <thead className="">
                 <ColumnHeader />
             </thead>
             <tbody>
