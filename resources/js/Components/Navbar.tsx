@@ -1,4 +1,5 @@
 import Sidebar from "./Sidebar"
+import { Link } from "@inertiajs/react"
 export default function Navbar() {
     return <>
         <div className="navbar bg-base-100 drop-shadow-lg">
@@ -19,7 +20,7 @@ export default function Navbar() {
 
             </div>
             <div className="navbar-center">
-                <a className="btn btn-ghost normal-case text-xl">Kasir Treatment</a>
+                <Link href={route('dashboard')} className="btn btn-ghost normal-case text-xl">Kasir Treatment</Link>
             </div>
             <div className="navbar-end">
                 <button className="btn btn-ghost btn-circle">

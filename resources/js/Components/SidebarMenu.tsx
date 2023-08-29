@@ -1,4 +1,4 @@
-import { FaGaugeHigh, FaUser, FaUsers, FaRightFromBracket } from "react-icons/fa6";
+import { FaGaugeHigh, FaUser, FaUsers, FaRightFromBracket, FaCircleRadiation } from "react-icons/fa6";
 import type { ReactElement } from 'react'
 export type SidebarMenu = {
     title: string;
@@ -25,6 +25,12 @@ const menus: SidebarMenu[] = [
         icon: <FaUsers />,
         link: "user.index",
         permission: 'user-management'
+    },
+    {
+        title: "Role Management",
+        icon: <FaCircleRadiation />,
+        link: "role.index",
+        permission: ''
     },
     {
         title: "Logout",

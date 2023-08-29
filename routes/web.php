@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/table', [UserController::class, 'queryTable'])->name('table');
+    });
+
+    // role routes
+    Route::prefix('role')->name('role.')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::get('/table', [RoleController::class, 'queryTable'])->name('table');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
     });
 });
 
