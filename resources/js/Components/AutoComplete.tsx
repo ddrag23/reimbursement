@@ -1,7 +1,6 @@
 //./components/Autocomplete.tsx
 
-import classNames from "classnames";
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type Props = {
     items: string[];
