@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\QueryAdapterCollection;
 use Illuminate\Http\Request;
 use Inertia\Response;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -28,6 +29,6 @@ class RoleController extends Controller
 
     public function create()
     {
-        return inertia('Role/Create');
+        return inertia('Role/Create', ['title'  => 'Create Role', 'permissions' => Permission::all()->pluck('name')]);
     }
 }
