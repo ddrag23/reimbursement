@@ -1,7 +1,7 @@
 //./components/Autocomplete.tsx
 
 import classNames from "classnames";
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 
 type Props = {
     items: string[];
@@ -14,10 +14,21 @@ const Autocomplete = (props: Props) => {
     const { items, value, onChange } = props;
     const ref = useRef<HTMLDivElement>(null);
     const [open, setOpen] = useState(false);
+    const handleOutsideClick = (e: any) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+            setOpen(false);
+        }
+    };
+    useEffect(() => {
+        document.addEventListener("mousedown", handleOutsideClick);
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    });
     return (
         <div
             // use classnames here to easily toggle dropdown open
-            className="dropdown w-full"
+            className="w-full realative"
             ref={ref}
         >
             <input
@@ -30,7 +41,7 @@ const Autocomplete = (props: Props) => {
                 tabIndex={0}
             />
             {/* add this part */}
-            {open && <div className="dropdown-content bg-base-200 top-14 max-h-96 overflow-auto flex-col rounded-md">
+            {open && <div className="bg-base-200 max-h-96 overflow-auto flex-col rounded-md absolute z-1">
                 <ul
                     className="menu menu-compact"
                     // use ref to calculate the width of parent
