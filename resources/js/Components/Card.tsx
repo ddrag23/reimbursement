@@ -18,7 +18,7 @@ export default function Card({ title, children, isFooter, childrenFooter, classN
                 {children}
             </div>
             {isFooter && <>
-                {childrenFooter}
+                {<div className="p-5">{childrenFooter}</div>}
             </>}
 
         </div>
