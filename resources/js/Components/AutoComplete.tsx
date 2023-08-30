@@ -6,11 +6,12 @@ type Props = {
     items: string[];
     value: string;
     onChange(val: string): void;
+    handleClick?: (val: string) => void;
 };
 
 //we are using dropdown, input and menu component from daisyui
 const Autocomplete = (props: Props) => {
-    const { items, value, onChange } = props;
+    const { items, value, onChange, handleClick } = props;
     const ref = useRef<HTMLDivElement>(null);
     const [open, setOpen] = useState(false);
     const handleOutsideClick = (e: any) => {
@@ -54,6 +55,9 @@ const Autocomplete = (props: Props) => {
                                 onClick={() => {
                                     onChange(item);
                                     setOpen(false);
+                                    if (handleClick) {
+                                        handleClick(item)
+                                    }
 
                                 }}
                                 className="border-b border-b-base-content/10 w-full"
