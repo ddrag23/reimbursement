@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('index');
         Route::get('/table', [RoleController::class, 'queryTable'])->name('table');
         Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::post('/store', [RoleController::class, 'store'])->name('store');
     });
 });
 
