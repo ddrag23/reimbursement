@@ -31,4 +31,9 @@ class RoleController extends Controller
     {
         return inertia('Role/Create', ['title'  => 'Create Role', 'permissions' => Permission::all()->pluck('name')]);
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }
