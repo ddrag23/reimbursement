@@ -34,6 +34,12 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'role_name' => 'required',
+            'permissions' => 'required',
+        ]);
+        $save = Role::create(['name' => $request->role_name]);
+        $save->syncPermissions(json_decode($request->permissions));
+        return to_route('role.index');
     }
 }

@@ -2,9 +2,10 @@ import AutoComplete from "@/Components/AutoComplete";
 import Card from "@/Components/Card";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
-import { Head, router } from "@inertiajs/react";
+import { Head, router, usePage } from "@inertiajs/react";
 import { FaTrash } from "react-icons/fa6";
-import { useEffect, useState, ReactNode } from "react";
+import { useEffect, useState } from "react";
+import LoadingButton from "@/Components/LoadingButton";
 import toast, { Toaster } from 'react-hot-toast';
 type CreateProps = {
     title: string
@@ -17,8 +18,9 @@ export default function Create({ auth, title, permissions }: PageProps<CreatePro
     const [role, setRole] = useState<string>("");
     //a list of countries to show the dropdown
     const [permission, setPermissions] = useState<any[]>([])
-
+    const { errors } = usePage().props
     const [permissionData, setPermissionsData] = useState<string[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
     function handleInputChange(value: string) {
         if (value == '') {
             setPermissions(permissions)
@@ -46,12 +48,28 @@ export default function Create({ auth, title, permissions }: PageProps<CreatePro
     }
     function submit(e: any) {
         e.preventDefault()
-        router.post(route('role.store'), { role_name: role, permissions: JSON.stringify(permissionData) })
+        router.post(route('role.store'), { role_name: role, permissions: permissionData.length ? JSON.stringify(permissionData) : '' }, {
+            onSuccess: () => {
+                setPermissionsData([])
+                setRole("")
+                setLoading(false)
+                toast.success("Data berhasil disimpan");
+            },
+            onStart: () => {
+                setLoading(true)
+            },
+            onError: (e) => {
+                toast.error("mohon lengkapi form")
+                setLoading(false)
+            }
+        })
     }
     function FooterCard() {
         return <>
             <div className="flex justify-end">
-                <button className="btn btn-primary" onClick={submit}>Simpan</button>
+                {loading ? <LoadingButton className="btn-primary" /> :
+                    <button className="btn btn-primary" onClick={submit}>Simpan</button>
+                }
             </div></>
     }
     useEffect(() => {
@@ -66,12 +84,15 @@ export default function Create({ auth, title, permissions }: PageProps<CreatePro
                         <span className="label-text">Role Name</span>
                     </label>
                     <input type="text" placeholder="Type here" className="input input-bordered w-full" value={role} onChange={(e) => setRole(e.target.value)} />
+                    {errors.role_name && <small className="text-error">{errors.role_name}</small>}
                 </div>
                 <div className="form-control w-full">
                     <label className="label">
                         <span className="label-text">Permissions</span>
                     </label>
                     <AutoComplete value={value} onChange={handleInputChange} items={permission} handleClick={selectValue} />
+                    {errors.permissions && <small className="text-error">{errors.permissions}</small>}
+
                 </div>
             </div>
             <div className="grid grid-cols-1 mt-5">
