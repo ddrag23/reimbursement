@@ -7,6 +7,9 @@ import UserTableBody from "./Partials/UserTableBody";
 import Loading from "@/Components/Loading";
 import can from "@/utils/can";
 import AuthContext from "@/Context/AuthContext";
+import { Link, router } from "@inertiajs/react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 type UserTableProps = {
     tableUrl: string
 }
@@ -19,6 +22,7 @@ export default function UserTable({ tableUrl }: UserTableProps) {
         { id: 'action', title: "Aksi" },
     ];
     const user = useContext(AuthContext)
+    const confirm = withReactContent(Swal)
     const [data, setData] = useState<any[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -28,6 +32,17 @@ export default function UserTable({ tableUrl }: UserTableProps) {
     function handlePageChange(newPage: number) {
         setCurrentPage(newPage);
     };
+    function deleteData(id: number) {
+        confirm.fire({ icon: "warning", title: "warning", text: "Apakah anda yakin mau menghapus data ini?", showCancelButton: true }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('user.destroy', { id: id }), {
+                    onFinish: () => {
+                        setRefresh(prev => !prev)
+                    }
+                })
+            }
+        })
+    }
     useEffect(() => {
         const source = axios.CancelToken.source()
         let url = `${tableUrl}?limit=10&page=${currentPage}`;
@@ -48,7 +63,7 @@ export default function UserTable({ tableUrl }: UserTableProps) {
     return <>
         <div className="flex justify-between mb-5">
             {can(user, 'create-user') &&
-                <button className="btn btn-primary"><FaPlus />Tambah</button>
+                <Link href={route('user.create')} className="btn btn-primary"><FaPlus />Tambah</Link>
             }
             <div className="flex w-1/4 gap-3">
                 <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={(e) => setSearch(e.target.value)} value={search} />
@@ -61,18 +76,8 @@ export default function UserTable({ tableUrl }: UserTableProps) {
         </div>
         {loading ? <Loading /> :
             <DataTable tbHeader={columns} pagination={<Pagination totalData={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}>
-                <UserTableBody columns={columns} data={data} />
+                <UserTableBody columns={columns} data={data} funcDelete={deleteData} />
             </DataTable>
         }
-        <dialog id="my_modal_1" className="modal">
-            <form method="dialog" className="modal-box">
-                <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">Press ESC key or click the button below to close</p>
-                <div className="modal-action">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
-                </div>
-            </form>
-        </dialog>
     </>
 }
