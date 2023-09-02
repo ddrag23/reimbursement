@@ -77,7 +77,7 @@ export default function Create({ auth, title, permissions }: PageProps<CreatePro
     }, [])
     return <Authenticated user={auth.user}>
         <Head title={title} />
-        <Card title={title} isFooter={true} childrenFooter={<FooterCard />}>
+        <Card title={title} isFooter={true} childrenFooter={<FooterCard />} routeBack={route('role.index')}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="form-control w-full">
                     <label className="label">
