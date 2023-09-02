@@ -51,6 +51,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/table', [RoleController::class, 'queryTable'])->name('table');
         Route::get('/create', [RoleController::class, 'create'])->name('create');
         Route::post('/store', [RoleController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [RoleController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy');
     });
 });
 

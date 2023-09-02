@@ -1,19 +1,20 @@
 import AutoComplete from "@/Components/AutoComplete";
 import Card from "@/Components/Card";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { PageProps } from "@/types";
+import { PageProps, Roles } from "@/types";
 import { Head, router, usePage } from "@inertiajs/react";
 import { FaTrash } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import LoadingButton from "@/Components/LoadingButton";
 import toast, { Toaster } from 'react-hot-toast';
-type CreateProps = {
+type EditProps = {
     title: string
-    permissions: any[]
+    permissions: any[],
+    query: Roles,
 }
 
 
-export default function Create({ auth, title, permissions }: PageProps<CreateProps>) {
+export default function Edit({ auth, title, permissions, query }: PageProps<EditProps>) {
     const [value, setValue] = useState<string>("");
     const [role, setRole] = useState<string>("");
     //a list of countries to show the dropdown
@@ -33,23 +34,27 @@ export default function Create({ auth, title, permissions }: PageProps<CreatePro
         );
         setPermissions(filtered);
     };
-    function selectValue(value: string) {
+    function setDefault(): void {
+        setValue("")
+        setPermissions(permissions)
+    }
+    function selectValue(value: string): void {
         if (permissionData.some(item => item == value)) {
             toast.error("Data sudah ada")
+            setDefault()
             return
         }
         setPermissionsData([...permissionData, value])
-        setValue("")
-        setPermissions(permissions)
+        setDefault()
 
     }
-    function removePermissionData(item: string) {
+    function removePermissionData(item: string): void {
         setPermissionsData(permissionData.filter((i) => i != item))
     }
     function submit(e: any) {
         e.preventDefault()
-        router.post(route('role.store'), { role_name: role, permissions: permissionData.length ? JSON.stringify(permissionData) : '' }, {
-            onSuccess: () => {
+        router.put(route('role.update', { id: query.id }), { role_name: role, permissions: permissionData.length ? JSON.stringify(permissionData) : '' }, {
+            onFinish: () => {
                 setPermissionsData([])
                 setRole("")
                 setLoading(false)
@@ -73,6 +78,9 @@ export default function Create({ auth, title, permissions }: PageProps<CreatePro
     }
     useEffect(() => {
         setPermissions(permissions)
+        setRole(query.name)
+        const queryPermissions = query.permissions.map((item: any) => item.name)
+        setPermissionsData(queryPermissions)
     }, [])
     return <Authenticated user={auth.user}>
         <Head title={title} />

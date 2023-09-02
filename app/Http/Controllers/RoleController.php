@@ -40,6 +40,32 @@ class RoleController extends Controller
         ]);
         $save = Role::create(['name' => $request->role_name]);
         $save->syncPermissions(json_decode($request->permissions));
-        return to_route('role.index');
+        return redirect()->route('role.index')->with("message", "Buat data berhasil");
+    }
+
+    public function edit(int $id)
+    {
+        $data = Role::with('permissions')->findOrFail($id);
+        return inertia('Role/Edit', ['title'  => 'Edit Role', 'permissions' => Permission::all()->pluck('name'), 'query' => $data]);
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $request->validate([
+            'role_name' => 'required',
+            'permissions' => 'required',
+        ]);
+        $save = Role::findById($id);
+        $save->syncPermissions(json_decode($request->permissions));
+        $save->update(['name' => $request->role_name]);
+        return redirect()->route('role.index')->with("message", "Edit data berhasil");
+    }
+
+    public function destroy($id)
+    {
+        $role = Role::findOrFail($id);
+        $role->revokePermissionTo($role->permissions->pluck('name'));
+        $role->delete();
+        return redirect()->route('role.index')->with('message', 'Hapus data berhasil');
     }
 }

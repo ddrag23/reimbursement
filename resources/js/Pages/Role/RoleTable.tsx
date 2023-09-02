@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
 import Pagination from "@/Components/Pagination";
 import DataTable, { ColumnHeader } from "@/Components/DataTable";
 import { FaPlus, FaXmark, FaArrowsRotate } from "react-icons/fa6";
 import RoleTableBody from "./Partials/RoleTableBody";
 import Loading from "@/Components/Loading";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import can from "@/utils/can";
 import AuthContext from "@/Context/AuthContext";
 type RoleTableProps = {
@@ -17,6 +19,7 @@ export default function RoleTable({ tableUrl }: RoleTableProps) {
         { id: 'name', title: "Nama" },
         { id: 'action', title: "Aksi" },
     ];
+    const confirm = withReactContent(Swal)
     const user = useContext(AuthContext)
     const [data, setData] = useState<any[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0)
@@ -24,9 +27,21 @@ export default function RoleTable({ tableUrl }: RoleTableProps) {
     const [search, setSearch] = useState<string>("")
     const [refresh, setRefresh] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
+    const [id, setId] = useState<number>(0)
     function handlePageChange(newPage: number) {
         setCurrentPage(newPage);
     };
+    function deleteData(id: number) {
+        confirm.fire({ icon: "warning", title: "warning", text: "Apakah anda yakin mau menghapus data ini?", showCancelButton: true }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('role.destroy', { id: id }), {
+                    onFinish: () => {
+                        setRefresh(prev => !prev)
+                    }
+                })
+            }
+        })
+    }
     useEffect(() => {
         const source = axios.CancelToken.source()
         let url = `${tableUrl}?limit=10&page=${currentPage}`;
@@ -60,18 +75,8 @@ export default function RoleTable({ tableUrl }: RoleTableProps) {
         </div>
         {loading ? <Loading /> :
             <DataTable tbHeader={columns} pagination={<Pagination totalData={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}>
-                <RoleTableBody columns={columns} data={data} />
+                <RoleTableBody columns={columns} data={data} funcDelete={deleteData} />
             </DataTable>
         }
-        <dialog id="my_modal_1" className="modal">
-            <form method="dialog" className="modal-box">
-                <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">Press ESC key or click the button below to close</p>
-                <div className="modal-action">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
-                </div>
-            </form>
-        </dialog>
     </>
 }

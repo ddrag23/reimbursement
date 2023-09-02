@@ -3,7 +3,7 @@ export interface Permissions {
 }
 export interface Roles {
     id: number;
-    name: number;
+    name: string;
     permissions: Permissions[];
 }
 export interface User {
@@ -19,5 +19,8 @@ export type PageProps<
 > = T & {
     auth: {
         user: User;
+    };
+    flash: {
+        message: string;
     };
 };
