@@ -27,7 +27,6 @@ export default function RoleTable({ tableUrl }: RoleTableProps) {
     const [search, setSearch] = useState<string>("")
     const [refresh, setRefresh] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
-    const [id, setId] = useState<number>(0)
     function handlePageChange(newPage: number) {
         setCurrentPage(newPage);
     };
