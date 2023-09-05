@@ -19,7 +19,7 @@ class PermissionSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Permission::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
-        $permissions = ['dashboard', 'profile', 'user-management', 'role-management', 'assign-permisson-role', 'assign-role-user', 'create-user', 'edit-user', 'delete-user', 'create-role', 'edit-role', 'delete-role'];
+        $permissions = ['dashboard', 'profile', 'reimbursement', 'user-management', 'role-management', 'assign-permisson-role', 'assign-role-user', 'create-user', 'edit-user', 'delete-user', 'create-role', 'edit-role', 'delete-role', 'create-reimbursement', 'edit-reimbursement', 'delete-reimbursement', 'approve-reimbursement', 'reject-reimbursement'];
         collect($permissions)->each(fn ($item) => Permission::create(['name' => $item]));
     }
 }

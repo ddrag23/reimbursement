@@ -15,9 +15,9 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             ['name' => 'superadmin'],
-            ['name' => 'admin'],
-            ['name' => 'pegawai'],
-            ['name' => 'kasir'],
+            ['name' => 'direktur'],
+            ['name' => 'finance'],
+            ['name' => 'staff'],
         ];
         collect($roles)->each(fn ($item) => Role::create($item));
     }

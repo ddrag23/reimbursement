@@ -20,25 +20,29 @@ class UserSeeder extends Seeder
                 'name' => 'superadmin',
                 'password' => Hash::make('password'),
                 'email' => 'superadmin@mail.com',
+                'nip' => 'sp12345',
                 'user_role' => RoleConstant::SUPERADMIN,
             ],
             [
-                'name' => 'admin',
+                'name' => 'direktur',
                 'password' => Hash::make('password'),
-                'email' => 'admin@mail.com',
-                'user_role' => RoleConstant::ADMIN
+                'email' => 'direktur@mail.com',
+                'nip' => '1234',
+                'user_role' => RoleConstant::DIREKTUR
             ],
             [
-                'name' => 'pegawai',
+                'name' => 'staff',
                 'password' => Hash::make('password'),
-                'email' => 'pegawai@mail.com',
-                'user_role' => RoleConstant::PEGAWAI
+                'email' => 'staff@mail.com',
+                'nip' => '1235',
+                'user_role' => RoleConstant::STAFF
             ],
             [
-                'name' => 'kasir',
+                'name' => 'finance',
                 'password' => Hash::make('password'),
-                'email' => 'kasir@mail.com',
-                'user_role' => RoleConstant::KASIR
+                'email' => 'finance@mail.com',
+                'nip' => '1236',
+                'user_role' => RoleConstant::FINANCE
             ]
         ];
         collect($users)->each(function ($item) {
@@ -46,6 +50,7 @@ class UserSeeder extends Seeder
                 'name' => $item['name'],
                 'email' => $item['email'],
                 'password' => $item['password'],
+                'nip' => $item['nip'],
             );
             User::create($userData)
                 ->assignRole($item['user_role']);
