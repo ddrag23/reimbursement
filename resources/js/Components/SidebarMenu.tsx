@@ -1,4 +1,4 @@
-import { FaGaugeHigh, FaUser, FaUsers, FaRightFromBracket, FaCircleRadiation } from "react-icons/fa6";
+import { FaGaugeHigh, FaUser, FaUsers, FaRightFromBracket, FaCircleRadiation, FaArrowRotateLeft } from "react-icons/fa6";
 import type { ReactElement } from 'react'
 export type SidebarMenu = {
     title: string;
@@ -12,6 +12,12 @@ const menus: SidebarMenu[] = [
         icon: <FaGaugeHigh />,
         link: "dashboard",
         permission: 'dashboard',
+    },
+    {
+        title: "Reimbersement",
+        icon: <FaArrowRotateLeft />,
+        link: "reimbursement.index",
+        permission: 'reimbursement'
     },
     {
         title: "Profile",

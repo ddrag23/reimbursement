@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReimbursementController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -59,6 +60,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [RoleController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy');
+    });
+
+    // reimbursement routes
+    Route::prefix('reimbursement')->name('reimbursement.')->group(function () {
+        Route::get('/', [ReimbursementController::class, 'index'])->name('index');
+        Route::get('/table', [ReimbursementController::class, 'queryTable'])->name('table');
+        Route::get('/create', [ReimbursementController::class, 'create'])->name('create');
+        // Route::post('/store', [RoleController::class, 'store'])->name('store');
+        // Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
+        // Route::put('/update/{id}', [RoleController::class, 'update'])->name('update');
+        // Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy');
     });
 });
 

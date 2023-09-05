@@ -20,7 +20,7 @@ export default function Navbar() {
 
             </div>
             <div className="navbar-center">
-                <Link href={route('dashboard')} className="btn btn-ghost normal-case text-xl">Kasir Treatment</Link>
+                <Link href={route('dashboard')} className="btn btn-ghost normal-case text-xl">Reimbursement</Link>
             </div>
             <div className="navbar-end">
                 <button className="btn btn-ghost btn-circle">
