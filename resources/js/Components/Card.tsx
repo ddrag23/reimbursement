@@ -11,7 +11,7 @@ interface CardProps {
     routeBack?: string
 }
 export default function Card({ title, children, isFooter, childrenFooter, className, toolBar, routeBack }: PropsWithChildren<CardProps>): ReactElement {
-    return <div className={`max-w-7xl mx-auto sm:px-6 lg:px-8 ${className}`}>
+    return <div className={`max-w-7xl mx-auto sm:px-6 lg:px-8 ${className} overflow-x-auto`}>
         <div className="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
             <div className="flex justify-between items-center pt-5 px-5">
                 <div className="">

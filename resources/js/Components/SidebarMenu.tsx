@@ -36,7 +36,7 @@ const menus: SidebarMenu[] = [
         title: "Role Management",
         icon: <FaCircleRadiation />,
         link: "role.index",
-        permission: ''
+        permission: 'role-management'
     },
     {
         title: "Logout",

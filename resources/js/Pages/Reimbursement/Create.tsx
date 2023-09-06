@@ -14,7 +14,7 @@ type CreateProps = {
 type Payload = {
     nama_reimbursement: string
     deskripsi: string
-    file_pendukung: string
+    file_pendukung: File | string
     tanggal: string
 
 }
@@ -32,10 +32,11 @@ export default function Create({ auth, title }: PageProps<CreateProps>) {
     function bindingValue(e: any) {
         const key = e.target.id
         const value = e.target.value
-        if (e) {
-
+        if (e.target.files && key == 'file_pendukung') {
+            setPayload((val: any) => ({ ...val, file_pendukung: e.target.files[0] }))
+        } else {
+            setPayload((val: any) => ({ ...val, [key]: value }))
         }
-        setPayload((val: any) => ({ ...val, [key]: value }))
     }
     function convert(str: string) {
         let date = new Date(str),
@@ -45,7 +46,11 @@ export default function Create({ auth, title }: PageProps<CreateProps>) {
     }
     function submit(e: any) {
         e.preventDefault()
-        router.post(route('role.store'), payload, {
+        router.post(route('reimbursement.store'), payload, {
+            forceFormData: true,
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
             onSuccess: () => {
                 setLoading(false)
             },
@@ -95,7 +100,7 @@ export default function Create({ auth, title }: PageProps<CreateProps>) {
                     <label className="label">
                         <span className="label-text">File Pendukung <small>(gambar / pdf)</small></span>
                     </label>
-                    <input type="file" id="file_pendukung" className="file-input file-input-bordered w-full" />
+                    <input type="file" id="file_pendukung" className="file-input file-input-bordered w-full" onChange={bindingValue} />
                     {errors.file_pendukung && <small className="text-error">{errors.file_pendukung}</small>}
                 </div>
             </div>

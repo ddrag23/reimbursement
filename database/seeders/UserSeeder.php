@@ -34,14 +34,14 @@ class UserSeeder extends Seeder
                 'name' => 'staff',
                 'password' => Hash::make('password'),
                 'email' => 'staff@mail.com',
-                'nip' => '1235',
+                'nip' => '1236',
                 'user_role' => RoleConstant::STAFF
             ],
             [
                 'name' => 'finance',
                 'password' => Hash::make('password'),
                 'email' => 'finance@mail.com',
-                'nip' => '1236',
+                'nip' => '1235',
                 'user_role' => RoleConstant::FINANCE
             ]
         ];

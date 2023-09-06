@@ -34,6 +34,9 @@ export default function ReimbursementTable({ tableUrl }: ReimbursementTableProps
     function handlePageChange(newPage: number) {
         setCurrentPage(newPage);
     };
+    function refreshTable(value: boolean) {
+        setRefresh(prev => !prev)
+    }
     function deleteData(id: number) {
         confirm.fire({ icon: "warning", title: "warning", text: "Apakah anda yakin mau menghapus data ini?", showCancelButton: true }).then((result) => {
             if (result.isConfirmed) {
@@ -64,7 +67,7 @@ export default function ReimbursementTable({ tableUrl }: ReimbursementTableProps
 
     return <>
         <div className="flex justify-between mb-5">
-            {can(user, 'create-user') &&
+            {can(user, 'create-reimbursement') &&
                 <Link className="btn btn-primary" href={route('reimbursement.create')}><FaPlus />Tambah</Link>
             }
             <div className="flex w-1/4 gap-3">
@@ -78,7 +81,7 @@ export default function ReimbursementTable({ tableUrl }: ReimbursementTableProps
         </div>
         {loading ? <Loading /> :
             <DataTable tbHeader={columns} pagination={<Pagination totalData={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}>
-                <ReimbersementTableBody columns={columns} data={data} funcDelete={deleteData} />
+                <ReimbersementTableBody refreshData={refreshTable} columns={columns} data={data} funcDelete={deleteData} />
             </DataTable>
         }
     </>
