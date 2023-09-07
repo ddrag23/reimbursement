@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function queryTable(Request $request)
     {
-        $query = User::with('roles');
+        $query = User::with('roles')->where('email', '!=', 'superadmin@mail.com');
         if ($request->has('search')) {
             $query->where('email', 'like', "%{$request->search}%")->orWhere('name', 'like', "%{$request->search}%");
         }
