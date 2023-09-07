@@ -3,30 +3,47 @@
 ## Cara Install
 
 - Clone Repository ini ke lokal komputer anda:
-<br/>
-`git clone git@github.com:ddrag23/reimbursement.git`
+
+```sh
+git clone git@github.com:ddrag23/reimbursement.git
+```
 -  masuk ke direktori atau folder projek yang sudah diclone
 -  copy .env.example menjadi .env
+-  ubah FILESYSTEM_DISK sesuai dengan kebutuhan anda. disini author memakai public
+-  Lakukan symlink agar file yang sudah kita upload bisa dibuka
+```sh
+php artisan:storage link
+```
 -  lakukan installasi library laravel:
-<br>
-`composer install`
+```sh
+composer install
+```
 - kemudian generate laravel key
-<br>
-`php artisan key:generate`
+```sh 
+php artisan key:generate
+```
 - kemudian lakukan installasi library javascript
-<br>
-`npm install`
+```sh
+npm install
+```
 - setelah selesai buat database yang ada dilokal anda
 - Kemudian lakukan migration untuk generate struktur tabel yang sudah ada difolder migration
-<br>
-`php artisan migrate`
+```sh
+php artisan migrate
+```
 - setelah selesai migrasi tabel kemudian jalankan seeder data untuk membuat inisialisasi data
-<br>
-`php artisan db:seed`
+```sh
+php artisan db:seed
+```
 - Setelah semua proses sudah dilakukan buka 2 terminal dari kode editor anda atau external
 terminal yang anda miliki kemudian jalankan kode berikut :
-<br>
-`php artisan serve` dan `npm run dev` 
+```sh
+php artisan serve
+``` 
+
+```sh
+npm run dev
+``` 
 
 ## Github Link
 [https://github.com/ddrag23/reimbursement](https://github.com/ddrag23/reimbursement)
