@@ -22,7 +22,7 @@ class AssignRolePermissionSeeder extends Seeder
         $finance = Role::where('name', RoleConstant::FINANCE)->first();
         $superadmin->syncPermissions(['dashboard', 'profile', 'reimbursement', 'user-management', 'role-management', 'assign-permisson-role', 'assign-role-user', 'create-user', 'edit-user', 'delete-user', 'create-role', 'edit-role', 'delete-role', 'create-reimbursement', 'edit-reimbursement', 'delete-reimbursement', 'approve-reimbursement', 'reject-reimbursement']);
         $direktur->syncPermissions(['dashboard', 'profile', 'reimbursement', 'user-management', 'assign-role-user', 'create-user', 'edit-user', 'delete-user', 'approve-reimbursement', 'reject-reimbursement']);
-        $staff->syncPermissions(['dashboard', 'profile', 'reimbursement', 'create-reimbursement', 'edit-reimbursement', 'delete-reimbursement']);
-        $finance->syncPermissions(['dashboard', 'profile', 'reimbursement', 'approve-reimbursement', 'reject-reimbursement']);
+        $staff->syncPermissions(['dashboard', 'profile', 'reimbursement', 'create-reimbursement', 'user-management', 'edit-reimbursement', 'delete-reimbursement']);
+        $finance->syncPermissions(['dashboard', 'profile', 'reimbursement', 'approve-reimbursement', 'user-management', 'reject-reimbursement']);
     }
 }
