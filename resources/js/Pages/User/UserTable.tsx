@@ -18,7 +18,7 @@ export default function UserTable({ tableUrl }: UserTableProps) {
     const columns: ColumnHeader[] = [
         { id: 'name', title: "Nama" },
         { id: 'email', title: "Email" },
-        { id: 'roles', title: "Roles" },
+        { id: 'jabatan', title: "Jabatan" },
         { id: 'action', title: "Aksi" },
     ];
     const user = useContext(AuthContext)
