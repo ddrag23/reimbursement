@@ -12,7 +12,7 @@ git clone git@github.com:ddrag23/reimbursement.git
 -  ubah value dari env variable FILESYSTEM_DISK sesuai dengan kebutuhan anda. disini author memakai public
 -  Lakukan symlink agar file yang sudah kita upload bisa dibuka
 ```sh
-php artisan:storage link
+php artisan storage:link
 ```
 -  lakukan installasi library laravel:
 ```sh
