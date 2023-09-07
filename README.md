@@ -30,7 +30,7 @@ php artisan migrate
 ```sh
 php artisan db:seed
 ```
--  Kemudian ubah value dari env variable FILESYSTEM_DISK sesuai dengan kebutuhan anda. disini author memakai public
+-  Kemudian ubah value dari env variable FILESYSTEM_DISK yang awalnya local menjadi public
 -  Jalankan perintah symlink agar file yang sudah kita upload bisa dibuka
 ```sh
 php artisan storage:link
