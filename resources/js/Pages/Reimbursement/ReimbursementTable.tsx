@@ -40,7 +40,7 @@ export default function ReimbursementTable({ tableUrl }: ReimbursementTableProps
     function deleteData(id: number) {
         confirm.fire({ icon: "warning", title: "warning", text: "Apakah anda yakin mau menghapus data ini?", showCancelButton: true }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('role.destroy', { id: id }), {
+                router.delete(route('reimbursement.destroy', { id: id }), {
                     onFinish: () => {
                         setRefresh(prev => !prev)
                     }

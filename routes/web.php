@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
         // Route::put('/update/{id}', [RoleController::class, 'update'])->name('update');
         Route::put('/verification/{id}', [ReimbursementController::class, 'verification'])->name('verification');
-        // Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy');
+        Route::delete('/destroy/{id}', [ReimbursementController::class, 'destroy'])->name('destroy');
     });
 });
 

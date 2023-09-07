@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
 use Inertia\Response;
 
 class ReimbursementController extends Controller
@@ -85,5 +84,13 @@ class ReimbursementController extends Controller
             Log::error("verif error:" . $th->getTraceAsString());
             return redirect()->route('reimbursement.index')->withErrors(['message' => $th->getMessage()]);
         }
+    }
+
+    public function destroy(int $id)
+    {
+        $data = Reimbursement::findOrFail($id);
+        LogReimburesement::where('reimbursement_id', $id)->delete();
+        $data->delete();
+        return redirect()->route('reimbursement.index')->with('message', 'Reimbursement berhasil dihapus');
     }
 }
