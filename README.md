@@ -9,7 +9,7 @@ git clone git@github.com:ddrag23/reimbursement.git
 ```
 -  masuk ke direktori atau folder projek yang sudah diclone
 -  copy .env.example menjadi .env
--  ubah FILESYSTEM_DISK sesuai dengan kebutuhan anda. disini author memakai public
+-  ubah value dari env variable FILESYSTEM_DISK sesuai dengan kebutuhan anda. disini author memakai public
 -  Lakukan symlink agar file yang sudah kita upload bisa dibuka
 ```sh
 php artisan:storage link
