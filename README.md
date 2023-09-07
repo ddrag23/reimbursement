@@ -23,6 +23,10 @@
 - setelah selesai migrasi tabel kemudian jalankan seeder data untuk membuat inisialisasi data
 <br>
 `php artisan db:seed`
+- Setelah semua proses sudah dilakukan buka 2 terminal dari kode editor anda atau external
+terminal yang anda miliki kemudian jalankan kode berikut :
+<br>
+`php artisan serve` dan `npm run dev` 
 
 ## Github Link
 [https://github.com/ddrag23/reimbursement](https://github.com/ddrag23/reimbursement)
