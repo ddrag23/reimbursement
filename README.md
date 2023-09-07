@@ -9,11 +9,6 @@ git clone git@github.com:ddrag23/reimbursement.git
 ```
 -  masuk ke direktori atau folder projek yang sudah diclone
 -  copy .env.example menjadi .env
--  ubah value dari env variable FILESYSTEM_DISK sesuai dengan kebutuhan anda. disini author memakai public
--  Lakukan symlink agar file yang sudah kita upload bisa dibuka
-```sh
-php artisan storage:link
-```
 -  lakukan installasi library laravel:
 ```sh
 composer install
@@ -34,6 +29,11 @@ php artisan migrate
 - setelah selesai migrasi tabel kemudian jalankan seeder data untuk membuat inisialisasi data
 ```sh
 php artisan db:seed
+```
+-  Kemudian ubah value dari env variable FILESYSTEM_DISK sesuai dengan kebutuhan anda. disini author memakai public
+-  Jalankan perintah symlink agar file yang sudah kita upload bisa dibuka
+```sh
+php artisan storage:link
 ```
 - Setelah semua proses sudah dilakukan buka 2 terminal dari kode editor anda atau external
 terminal yang anda miliki kemudian jalankan kode berikut :
