@@ -8,5 +8,6 @@ class StatusReimbersementConstant
     public const APPROVE_DIRECTOR = 'Direktur menyetujui reimbursement';
     public const REJECT_DIRECTOR = 'Direktur menolak reimbursement';
     public const APPROVE_FINANCE = 'Finance menyetujui reimbursement';
+    public const PAYMENT_FINANCE = 'Finance melakukan pembayaran reimbursement';
     public const REJECT_FINANCE = 'Finance menolak reimbursement';
 }

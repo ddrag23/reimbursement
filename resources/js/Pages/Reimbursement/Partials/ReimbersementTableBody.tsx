@@ -1,5 +1,5 @@
 import { ReactNode, useContext, useState } from 'react'
-import { FaPencil, FaTrash, } from 'react-icons/fa6'
+import { FaEye, FaPencil, FaTrash, } from 'react-icons/fa6'
 import { ColumnHeader } from "@/Components/DataTable";
 import { Link, router } from '@inertiajs/react';
 import AuthContext from '@/Context/AuthContext';
@@ -28,7 +28,7 @@ export default function RoleTableBody({ data, columns, funcDelete, refreshData }
         return context?.roles.some(e => e.name == role)
     }
     function showVerificationButton(permission: string, statusPengajuan: string) {
-        return (canRole('direktur') || canRole('finance')) && can(context, permission) && ![REJECT_DIRECTOR, REJECT_FINANCE].includes(statusPengajuan)
+        return (canRole('direktur') || canRole('finance')) && can(context, permission) && ![REJECT_DIRECTOR, REJECT_FINANCE, APPROVE_FINANCE].includes(statusPengajuan)
     }
 
     function approve(e: any) {
@@ -85,9 +85,14 @@ export default function RoleTableBody({ data, columns, funcDelete, refreshData }
                 <td className='flex gap-3' >
                     {loadingApprove && item.id == index ? <LoadingButton className='btn-success btn-sm' /> : showVerificationButton('approve-reimbursement', item.status_pengajuan) && <button className='btn btn-success btn-sm' onClick={approve} data-id={item.id}>Approve</button>}
                     {loadingReject && item.id == index ? <LoadingButton className='btn-error btn-sm' /> : showVerificationButton('reject-reimbursement', item.status_pengajuan) && <button className='btn btn-error btn-sm' onClick={reject} data-id={item.id}>Reject</button>}
+                    {canRole('finance') && item.status_pengajuan == APPROVE_FINANCE &&
+                        <Link href={route('reimbursement.payment', { id: item.id })} className="btn btn-sm btn-success">Pembayaran</Link>
+                    }
                     {canRole('staff') && item.status_pengajuan == PENGAJUAN &&
                         <button className="btn btn-sm btn-error" onClick={() => modalDelete(item.id)}><FaTrash /></button>
                     }
+                    <Link className="btn btn-sm btn-info" href={route('reimbursement.show', { id: item.id })}><FaEye /></Link>
+
                 </td>
             </tr>)}
 

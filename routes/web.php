@@ -66,8 +66,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('reimbursement')->name('reimbursement.')->group(function () {
         Route::get('/', [ReimbursementController::class, 'index'])->name('index');
         Route::get('/table', [ReimbursementController::class, 'queryTable'])->name('table');
+        Route::get('/show/{id}', [ReimbursementController::class, 'show'])->name('show');
+        Route::get('/payment/{id}', [ReimbursementController::class, 'payment'])->name('payment');
         Route::get('/create', [ReimbursementController::class, 'create'])->name('create');
         Route::post('/store', [ReimbursementController::class, 'store'])->name('store');
+        Route::post('/store-payment', [ReimbursementController::class, 'storePayment'])->name('store-payment');
         // Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
         // Route::put('/update/{id}', [RoleController::class, 'update'])->name('update');
         Route::put('/verification/{id}', [ReimbursementController::class, 'verification'])->name('verification');
